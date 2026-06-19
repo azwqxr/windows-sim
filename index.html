@@ -5,13 +5,12 @@
   <title>win simulator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- seven dot cee ess ess -->
-  <link rel="stylesheet" href="https://unpkg.com/7.css">
-
   <!-- winbox -->
   <link rel="stylesheet" href="dist/css/winbox.min.css">
   <script src="dist/js/winbox.min.js"></script>
-
+  <!-- seven dot cee ess ess -->
+  <link rel="stylesheet" href="https://unpkg.com/7.css">
+  <!-- other -->
   <script src="compat.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -29,9 +28,6 @@
         class: ["no-full"],
 
         html: `
-          <div class="window active" style="margin: 0;">
-            <div class="window-body has-space">
-
               <p>Hello, world!</p>
 
               <section style="display: flex; justify-content: flex-end; gap: 6px;">
@@ -42,9 +38,6 @@
               <div role="progressbar" class="animate" style="margin-top: 12px;">
                 <div style="width: 60%"></div>
               </div>
-
-            </div>
-          </div>
         `
       });
     }

@@ -33,7 +33,10 @@
     var style = document.createElement('style');
     style.id = 'winbox-7css-compat-style';
     style.textContent = [
-        '.winbox.window { max-width: none !important; max-height: none !important; }',
+        // Neutralize WinBox's own default skin (border/background/shadow/radius)
+        // so 7.css's real .window styling is what actually renders.
+        '.winbox { border: none !important; box-shadow: none !important; background: none !important; border-radius: 0 !important; }',
+        '.winbox.window { max-width: none !important; max-height: none !important; box-sizing: border-box !important; }',
         '.winbox .wb-header.title-bar { position: absolute; top: 0; left: 0; right: 0; height: ' + HEADER_HEIGHT + 'px !important; line-height: normal !important; padding: 0; box-sizing: border-box; }',
         '.winbox .wb-header.title-bar .title-bar-text { display: flex; align-items: center; overflow: hidden; height: 100%; }',
         '.winbox .wb-header.title-bar .title-bar-controls { height: 100%; align-items: center; }',
