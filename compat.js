@@ -179,7 +179,7 @@
         const root = document.createElement("div");
 
         root.innerHTML = `
-<div class="window active wb7-window">
+<div class="window glass active wb7-window">
 
     <div class="title-bar">
 
