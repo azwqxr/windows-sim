@@ -48,5 +48,76 @@
     window.onload = openWindow;
   </script>
 
+    <script>
+    function openWindow() {
+      new WinBox({
+        title: "Settings",
+        width: "320px",
+        height: "220px",
+        x: "center",
+        y: "center",
+        class: ["no-full"],
+
+        html: `
+              <section class="tabs" style="max-width: 500px">
+  <menu role="tablist" aria-label="Sample Tabs">
+    <button role="tab" aria-controls="tab-A" aria-selected="true">Instruction</button>
+    <button role="tab" aria-controls="tab-B">Example</button>
+    <button role="tab" aria-controls="tab-C">More instruction</button>
+    <button role="tab" aria-controls="tab-D" disabled>Disabled Tab</button>
+  </menu>
+  <!-- the tab content -->
+  <article role="tabpanel" id="tab-A">
+    <h3>Creating tabs</h3>
+    <p>
+      To create a tab, use a <code>menu</code> element with <code>role="tablist"</code>.
+      Then for the tab titles, use a <code>button</code> with <code>role="tab"</code>, and set the <code>aria-controls</code> attribute to
+      the corresponding id of the element with <code>role="tabpanel"</code>.
+    </p>
+    <p>
+      Read more at <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role"
+        target="_blank">MDN Web docs - ARIA: tab role</a>
+    </p>
+  </article>
+  <article role="tabpanel" id="tab-B" hidden>
+    <h3>More...</h3>
+    <p>This tab contains a GroupBox</p>
+    <fieldset>
+      <legend>Today's mood</legend>
+      <div>
+        <input id="radio25" type="radio" name="fieldset-example2">
+        <label for="radio25">Claire Saffitz</label>
+      </div>
+      <div>
+        <input id="radio26" type="radio" name="fieldset-example2">
+        <label for="radio26">Brad Leone</label>
+      </div>
+      <div>
+        <input id="radio27" type="radio" name="fieldset-example2">
+        <label for="radio27">Chris Morocco</label>
+      </div>
+      <div>
+        <input id="radio28" type="radio" name="fieldset-example2">
+        <label for="radio28">Carla Lalli Music</label>
+      </div>
+    </fieldset>
+  </article>
+  <article role="tabpanel" id="tab-C" hidden>
+    <h3>Disabling tabs</h3>
+    <p>Simply add a <code>disabled</code> attribute on the tab.</p>
+    <h3>Justified tabs</h3>
+    <p>Add the <code>justified</code> class to the <code>tablist</code> menu to make the tabs, well, justified.</p>
+  </article>
+  <article role="tabpanel" id="tab-D" hidden>
+    <h3>Disabled Tab</h3>
+    <p>This tab is disabled, so you should not be able to read this.</p>
+  </article>
+</section>
+        `
+      });
+    }
+    window.onload = openWindow;
+  </script>
+
 </body>
 </html>
