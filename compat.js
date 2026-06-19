@@ -1,133 +1,312 @@
 /**
  * winbox-7css-compat.js
  *
- * Drop-in compatibility layer so WinBox.js windows render with 7.css
- * (Windows 7 / Aero) styling instead of WinBox's default skin.
+ * WinBox + 7.css integration.
  *
- * Load order:
- *   1. 7.css stylesheet
- *   2. winbox.js (the library)
+ * Load:
+ *   1. 7.css
+ *   2. winbox.bundle.js
  *   3. this file
- *
- * Usage afterwards — just use WinBox as normal:
- *   new WinBox({ title: "Hello", html: "<p>hi</p>" });
- *
- * Optional extra options this layer adds on top of normal WinBox options:
- *   glass: true        -> adds 7.css's frosted-glass title bar variant
- *   active: false      -> omit the 7.css "active" (focused) styling on create
  */
-(function () {
-    'use strict';
 
-    if (typeof WinBox === 'undefined') {
-        console.error('[winbox-7css-compat] WinBox.js must be loaded before this file.');
+(function () {
+    "use strict";
+
+    if (typeof WinBox === "undefined") {
+        console.error("WinBox must be loaded first.");
         return;
     }
 
-    // ---------------------------------------------------------------
-    // 1. Inject CSS overrides needed to reconcile WinBox's inline
-    //    sizing logic with 7.css's title-bar/window-body assumptions.
-    // ---------------------------------------------------------------
-    var HEADER_HEIGHT = 30; // adjust if your 7.css build uses a different title-bar height
+    const OriginalWinBox = WinBox;
 
-    var style = document.createElement('style');
-    style.id = 'winbox-7css-compat-style';
-    style.textContent = [
-        // Neutralize WinBox's own default skin (border/background/shadow/radius)
-        // so 7.css's real .window styling is what actually renders.
-        '.winbox { border: none !important; box-shadow: none !important; background: none !important; border-radius: 0 !important; }',
-        '.winbox.window { max-width: none !important; max-height: none !important; box-sizing: border-box !important; }',
-        '.winbox .wb-header.title-bar { position: absolute; top: 0; left: 0; right: 0; height: ' + HEADER_HEIGHT + 'px !important; line-height: normal !important; padding: 0; box-sizing: border-box; }',
-        '.winbox .wb-header.title-bar .title-bar-text { display: flex; align-items: center; overflow: hidden; height: 100%; }',
-        '.winbox .wb-header.title-bar .title-bar-controls { height: 100%; align-items: center; }',
-        '.winbox .wb-header.title-bar .title-bar-controls button { width: 21px; height: 21px; flex: 0 0 auto; }',
-        '.winbox .wb-body.window-body { position: absolute; left: 0; right: 0; bottom: 0; top: ' + HEADER_HEIGHT + 'px !important; margin: 0; overflow: auto; }',
-        '.winbox .wb-icon { width: 16px; height: 16px; margin-right: 4px; flex: 0 0 auto; background-size: contain; display: none; }',
-        '.winbox .wb-icon[style*="background-image"] { display: inline-block; }',
-        '.winbox .wb-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }',
-        '.winbox.min { display: none; }', // WinBox uses its own minimize-bar logic; hide window while minimized
-        '.winbox.no-full .wb-full { display: none; }'
-    ].join('\n');
+    const style = document.createElement("style");
+    style.textContent = `
+/* -------------------------------------------------- */
+/* WinBox container                                   */
+/* -------------------------------------------------- */
+
+.winbox {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* remove WinBox skin */
+
+.winbox > .wb-header,
+.winbox > .wb-body {
+    display: none !important;
+}
+
+/* -------------------------------------------------- */
+/* 7.css shell                                        */
+/* -------------------------------------------------- */
+
+.winbox .wb7-window {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.winbox .wb7-window .window-body {
+    flex: 1;
+    overflow: auto;
+}
+
+/* -------------------------------------------------- */
+/* title text                                         */
+/* -------------------------------------------------- */
+
+.winbox .wb-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* -------------------------------------------------- */
+/* icon                                                */
+/* -------------------------------------------------- */
+
+.winbox .wb-icon {
+    width: 16px;
+    height: 16px;
+    display: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.winbox .wb-icon.show {
+    display: inline-block;
+}
+
+/* -------------------------------------------------- */
+/* resize handles                                     */
+/* -------------------------------------------------- */
+
+.winbox .wb-n,
+.winbox .wb-s,
+.winbox .wb-w,
+.winbox .wb-e,
+.winbox .wb-nw,
+.winbox .wb-ne,
+.winbox .wb-sw,
+.winbox .wb-se {
+    position: absolute;
+    z-index: 10000;
+}
+
+.winbox .wb-n {
+    top: 0;
+    left: 8px;
+    right: 8px;
+    height: 5px;
+    cursor: n-resize;
+}
+
+.winbox .wb-s {
+    bottom: 0;
+    left: 8px;
+    right: 8px;
+    height: 5px;
+    cursor: s-resize;
+}
+
+.winbox .wb-w {
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 5px;
+    cursor: w-resize;
+}
+
+.winbox .wb-e {
+    right: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 5px;
+    cursor: e-resize;
+}
+
+.winbox .wb-nw {
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    cursor: nw-resize;
+}
+
+.winbox .wb-ne {
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    cursor: ne-resize;
+}
+
+.winbox .wb-sw {
+    bottom: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    cursor: sw-resize;
+}
+
+.winbox .wb-se {
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    cursor: se-resize;
+}
+
+/* -------------------------------------------------- */
+/* inactive window                                    */
+/* -------------------------------------------------- */
+
+.winbox:not(.focus) .wb7-window.active {
+    opacity: .96;
+}
+`;
     document.head.appendChild(style);
 
-    // ---------------------------------------------------------------
-    // 2. Build the hybrid template: WinBox functional classes (wb-*)
-    //    layered with 7.css visual classes (title-bar, window-body, ...)
-    // ---------------------------------------------------------------
     function buildTemplate() {
-        var tpl = document.createElement('div');
-        tpl.innerHTML =
-            '<div class="wb-header title-bar">' +
-                '<div class="wb-drag title-bar-text"><div class="wb-icon"></div><div class="wb-title"></div></div>' +
-                '<div class="wb-control title-bar-controls">' +
-                    '<button class="wb-min" aria-label="Minimize"></button>' +
-                    '<button class="wb-max" aria-label="Maximize"></button>' +
-                    '<button class="wb-full" aria-label="Fullscreen" style="display:none"></button>' +
-                    '<button class="wb-close" aria-label="Close"></button>' +
-                '</div>' +
-            '</div>' +
-            '<div class="wb-body window-body has-space"></div>' +
-            '<div class="wb-n"></div><div class="wb-s"></div><div class="wb-w"></div><div class="wb-e"></div>' +
-            '<div class="wb-nw"></div><div class="wb-ne"></div><div class="wb-se"></div><div class="wb-sw"></div>';
-        return tpl;
+        const root = document.createElement("div");
+
+        root.innerHTML = `
+<div class="window active wb7-window">
+
+    <div class="title-bar">
+
+        <div class="title-bar-text wb-drag">
+            <span class="wb-icon"></span>
+            <span class="wb-title"></span>
+        </div>
+
+        <div class="title-bar-controls">
+            <button class="wb-min" aria-label="Minimize"></button>
+            <button class="wb-max" aria-label="Maximize"></button>
+            <button class="wb-close" aria-label="Close"></button>
+        </div>
+
+    </div>
+
+    <div class="window-body has-space wb-body"></div>
+
+</div>
+
+<div class="wb-n"></div>
+<div class="wb-s"></div>
+<div class="wb-w"></div>
+<div class="wb-e"></div>
+
+<div class="wb-nw"></div>
+<div class="wb-ne"></div>
+<div class="wb-sw"></div>
+<div class="wb-se"></div>
+`;
+
+        return root;
     }
 
-    // ---------------------------------------------------------------
-    // 3. Wrap the WinBox constructor so every window automatically
-    //    gets the hybrid template + 7.css "window" root classes,
-    //    and wires up the Maximize <-> Restore aria-label swap.
-    // ---------------------------------------------------------------
-    var OriginalWinBox = WinBox;
-
     function PatchedWinBox(a, b) {
-        if (!(this instanceof PatchedWinBox)) return new PatchedWinBox(a);
 
-        var opts = a;
-        if (typeof a === 'string') {
+        let opts;
+
+        if (typeof a === "string") {
             opts = b || {};
             opts.title = a;
         } else {
             opts = a || {};
         }
 
-        // Don't clobber an explicitly supplied template.
+        opts = Object.assign({}, opts);
+
         if (!opts.template) {
             opts.template = buildTemplate();
         }
 
-        // Merge in 7.css root classes ("window" + optional "glass" + optional "active").
-        var extra = ['window'];
-        if (opts.glass) extra.push('glass');
-        if (opts.active !== false) extra.push('active');
+        const userFocus = opts.onfocus;
+        const userBlur = opts.onblur;
+        const userRestore = opts.onrestore;
+        const userMax = opts.onmaximize;
 
-        var existing = opts['class']
-            ? (Array.isArray(opts['class']) ? opts['class'] : [opts['class']])
-            : [];
-        opts['class'] = existing.concat(extra);
+        opts.onfocus = function () {
 
-        // Keep WinBox's own header height option in sync with our CSS constant
-        // unless the caller explicitly set one.
-        if (opts.header === undefined) opts.header = HEADER_HEIGHT;
+            const w = this.g.querySelector(".wb7-window");
 
-        // Preserve user callbacks while adding the Restore aria-label swap.
-        var userMax = opts.onmaximize, userRestore = opts.onrestore;
+            if (w) {
+                w.classList.add("active");
+            }
+
+            if (userFocus) {
+                userFocus.call(this);
+            }
+        };
+
+        opts.onblur = function () {
+
+            const w = this.g.querySelector(".wb7-window");
+
+            if (w) {
+                w.classList.remove("active");
+            }
+
+            if (userBlur) {
+                userBlur.call(this);
+            }
+        };
+
         opts.onmaximize = function () {
-            var btn = this.g.querySelector('.wb-max');
-            if (btn) btn.setAttribute('aria-label', 'Restore');
-            if (userMax) userMax.call(this);
-        };
-        opts.onrestore = function () {
-            var btn = this.g.querySelector('.wb-max');
-            if (btn) btn.setAttribute('aria-label', 'Maximize');
-            if (userRestore) userRestore.call(this);
+
+            const btn = this.g.querySelector(".wb-max");
+
+            if (btn) {
+                btn.setAttribute("aria-label", "Restore");
+            }
+
+            if (userMax) {
+                userMax.call(this);
+            }
         };
 
-        return new OriginalWinBox(opts);
+        opts.onrestore = function () {
+
+            const btn = this.g.querySelector(".wb-max");
+
+            if (btn) {
+                btn.setAttribute("aria-label", "Maximize");
+            }
+
+            if (userRestore) {
+                userRestore.call(this);
+            }
+        };
+
+        const win = new OriginalWinBox(opts);
+
+        if (opts.icon) {
+
+            const icon = win.g.querySelector(".wb-icon");
+
+            if (icon) {
+                icon.style.backgroundImage = `url("${opts.icon}")`;
+                icon.classList.add("show");
+            }
+        }
+
+        return win;
     }
 
     PatchedWinBox.prototype = OriginalWinBox.prototype;
-    PatchedWinBox['new'] = function (a) { return new PatchedWinBox(a); };
     PatchedWinBox.stack = OriginalWinBox.stack;
+    PatchedWinBox.new = function (o) { return new PatchedWinBox(o); };
 
     window.WinBox = PatchedWinBox;
+
 })();
