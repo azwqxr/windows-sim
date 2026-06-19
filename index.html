@@ -1,39 +1,90 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <title>Hello, world!</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <meta name="description" content="" />
-      <link rel="icon" href="favicon.png">
-      <link rel="stylesheet" href="https://unpkg.com/7.css">
-      <link rel="stylesheet" href="dist/css/winbox.min.css">
-      <script src="dist/js/winbox.min.js"></script>
-   </head>
-   <body>
-    <div class="window active" style="margin: 32px; width: 250px">
-        <div class="title-bar">
-            <div class="title-bar-text">
-              My First Program
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>WinBox + 7.css Hybrid</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            <div class="title-bar-controls">
-                <button aria-label="Minimize"></button>
-                <button aria-label="Maximize"></button>
-                <button aria-label="Close"></button>
-            </div>
-        </div>
-        <div class="window-body has-space">
-            <p>Hello, world!</p>
-            <section style="display: flex; justify-content: flex-end; gap: 6px">
+  <!-- 7.css (inside window styling) -->
+  <link rel="stylesheet" href="https://unpkg.com/7.css">
+
+  <!-- WinBox -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/winbox@0.2.82/dist/css/winbox.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/winbox@0.2.82/dist/winbox.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #1e1e1e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+    }
+
+    /* Button launcher */
+    .launch-btn {
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Make WinBox look more “7.css-ish” */
+    .winbox {
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .wb-title {
+      font-family: "Segoe UI", sans-serif;
+      font-size: 13px;
+    }
+
+    .wb-body {
+      background: #f3f3f3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="launch-btn" onclick="openWindow()">Open Program</button>
+
+  <script>
+    function openWindow() {
+      new WinBox({
+        title: "My First Program",
+        width: "320px",
+        height: "220px",
+        x: "center",
+        y: "center",
+        class: "no-min no-max", // keeps it simple like a dialog
+
+        html: `
+          <div class="window active" style="margin: 0;">
+            <div class="window-body has-space">
+
+              <p>Hello, world!</p>
+
+              <section style="display: flex; justify-content: flex-end; gap: 6px;">
                 <button class="default">OK</button>
                 <button>Cancel</button>
-            </section>
+              </section>
 
-                      <div role="progressbar" class="animate">
-  <div style="width: 60%"></div>
-</div>
-        </div>
-    </div>
-   </body>
+              <div role="progressbar" class="animate" style="margin-top: 12px;">
+                <div style="width: 60%"></div>
+              </div>
+
+            </div>
+          </div>
+        `
+      });
+    }
+
+    // auto-open on load (optional)
+    window.onload = openWindow;
+  </script>
+
+</body>
 </html>
