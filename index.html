@@ -17,40 +17,12 @@
 
   <link rel="stylesheet" href="styles.css">
   <script src="dragselect.js"></script>
-   <script src="script.js"></script>
+  <script src="script.js"></script>
 </head>
 
 <body>
-
-  <script>
-    function openWindow() {
-      new WinBox({
-        title: "My First Program",
-        width: "320px",
-        height: "320px",
-        x: "center",
-        y: "center",
-        class: ["no-full"],
-
-        html: `
-              <p>Hello, world!</p>
-
-              <section style="display: flex; justify-content: flex-end; gap: 6px;">
-                <button class="default">OK</button>
-                <button>Cancel</button>
-              </section>
-
-              <div role="progressbar" class="animate" style="margin-top: 12px;">
-                <div style="width: 60%"></div>
-              </div>
-        `
-      });
-    }
-    window.onload = openWindow;
-  </script>
-
     <script>
-    function openWindow() {
+    function openWindow(content) {
       new WinBox({
         title: "Settings",
         width: "320px",
@@ -59,13 +31,15 @@
         y: "center",
         class: ["no-full"],
 
-        html: `
-              <section class="tabs" style="max-width: 500px">
+        html: content
+      });
+    }
+    window.onload = openWindow(`<section class="tabs" style="max-width: 500px">
   <menu role="tablist" aria-label="Sample Tabs">
     <button role="tab" aria-controls="tab-A" aria-selected="true">Instruction</button>
     <button role="tab" aria-controls="tab-B">Example</button>
     <button role="tab" aria-controls="tab-C">More instruction</button>
-    <button role="tab" aria-controls="tab-D" disabled>Disabled Tab</button>
+    <button role="tab" aria-controls="tab-D" disabled="">Disabled Tab</button>
   </menu>
   <!-- the tab content -->
   <article role="tabpanel" id="tab-A">
@@ -76,11 +50,10 @@
       the corresponding id of the element with <code>role="tabpanel"</code>.
     </p>
     <p>
-      Read more at <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role"
-        target="_blank">MDN Web docs - ARIA: tab role</a>
+      Read more at <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role" target="_blank">MDN Web docs - ARIA: tab role</a>
     </p>
   </article>
-  <article role="tabpanel" id="tab-B" hidden>
+  <article role="tabpanel" id="tab-B" hidden="">
     <h3>More...</h3>
     <p>This tab contains a GroupBox</p>
     <fieldset>
@@ -103,21 +76,17 @@
       </div>
     </fieldset>
   </article>
-  <article role="tabpanel" id="tab-C" hidden>
+  <article role="tabpanel" id="tab-C" hidden="">
     <h3>Disabling tabs</h3>
     <p>Simply add a <code>disabled</code> attribute on the tab.</p>
     <h3>Justified tabs</h3>
     <p>Add the <code>justified</code> class to the <code>tablist</code> menu to make the tabs, well, justified.</p>
   </article>
-  <article role="tabpanel" id="tab-D" hidden>
+  <article role="tabpanel" id="tab-D" hidden="">
     <h3>Disabled Tab</h3>
     <p>This tab is disabled, so you should not be able to read this.</p>
   </article>
-</section>
-        `
-      });
-    }
-    window.onload = openWindow;
+</section>`);
   </script>
 
 </body>
