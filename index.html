@@ -23,33 +23,14 @@
       font-family: sans-serif;
     }
 
-    /* Button launcher */
-    .launch-btn {
-      padding: 10px 16px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    /* Make WinBox look more “7.css-ish” */
-    .winbox {
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .wb-title {
+    .h1 {
       font-family: "Segoe UI", sans-serif;
       font-size: 13px;
-    }
-
-    .wb-body {
-      background: #f3f3f3;
     }
   </style>
 </head>
 
 <body>
-
-  <button class="launch-btn" onclick="openWindow()">Open Program</button>
 
   <script>
     function openWindow() {
@@ -81,8 +62,6 @@
         `
       });
     }
-
-    // auto-open on load (optional)
     window.onload = openWindow;
   </script>
 
