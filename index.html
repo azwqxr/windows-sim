@@ -22,11 +22,11 @@
 
 <body>
     <script>
-    function openWindow(content) {
+    function openWindow(content,wid,hei,title) {
       new WinBox({
-        title: "Settings",
-        width: "320px",
-        height: "220px",
+        title: title,
+        width: wid,
+        height: hei,
         x: "center",
         y: "center",
         class: ["no-full"],
@@ -86,7 +86,7 @@
     <h3>Disabled Tab</h3>
     <p>This tab is disabled, so you should not be able to read this.</p>
   </article>
-</section>`);
+</section>`,800,800,"Settings");
   </script>
 
 </body>
