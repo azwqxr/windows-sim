@@ -1,7 +1,9 @@
-//dragselect
+// dragselect
 (() => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
+
+    ctx.imageSmoothingEnabled = false;
 
     canvas.id = "selectionCanvas";
 
@@ -39,6 +41,8 @@
     const selectImg = new Image();
     selectImg.src = "select.png";
 
+    let centerPattern = null;
+
     let dragging = false;
     let startX = 0;
     let startY = 0;
@@ -74,16 +78,36 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
-    function draw9Slice(x, y, w, h) {
-        const border = 4;
+    function getBorderSize() {
+        const scale = Math.min(
+            window.innerWidth,
+            window.innerHeight
+        );
 
+        return Math.max(
+            4,
+            Math.round(scale / 180)
+        );
+    }
+
+    function draw9Slice(x, y, w, h) {
         if (w <= 0 || h <= 0) return;
+
+        const border = Math.min(
+            getBorderSize(),
+            Math.floor(w / 2),
+            Math.floor(h / 2)
+        );
+
+        const centerW = Math.max(0, w - border * 2);
+        const centerH = Math.max(0, h - border * 2);
 
         // Top-left
         ctx.drawImage(
             selectImg,
             0, 0, 1, 1,
-            x, y, border, border
+            x, y,
+            border, border
         );
 
         // Top
@@ -91,8 +115,7 @@
             selectImg,
             1, 0, 1, 1,
             x + border, y,
-            Math.max(0, w - border * 2),
-            border
+            centerW, border
         );
 
         // Top-right
@@ -108,18 +131,19 @@
             selectImg,
             0, 1, 1, 1,
             x, y + border,
-            border,
-            Math.max(0, h - border * 2)
+            border, centerH
         );
 
-        // Center
-        ctx.drawImage(
-            selectImg,
-            1, 1, 1, 1,
-            x + border, y + border,
-            Math.max(0, w - border * 2),
-            Math.max(0, h - border * 2)
-        );
+        // Center (tiled)
+        if (centerPattern && centerW > 0 && centerH > 0) {
+            ctx.fillStyle = centerPattern;
+            ctx.fillRect(
+                x + border,
+                y + border,
+                centerW,
+                centerH
+            );
+        }
 
         // Right
         ctx.drawImage(
@@ -127,8 +151,7 @@
             2, 1, 1, 1,
             x + w - border,
             y + border,
-            border,
-            Math.max(0, h - border * 2)
+            border, centerH
         );
 
         // Bottom-left
@@ -145,8 +168,7 @@
             1, 2, 1, 1,
             x + border,
             y + h - border,
-            Math.max(0, w - border * 2),
-            border
+            centerW, border
         );
 
         // Bottom-right
@@ -172,5 +194,25 @@
         draw9Slice(x, y, w, h);
     }
 
-    selectImg.onload = draw;
+    selectImg.onload = () => {
+        const tileCanvas = document.createElement("canvas");
+        tileCanvas.width = 1;
+        tileCanvas.height = 1;
+
+        const tileCtx = tileCanvas.getContext("2d");
+        tileCtx.imageSmoothingEnabled = false;
+
+        tileCtx.drawImage(
+            selectImg,
+            1, 1, 1, 1,
+            0, 0, 1, 1
+        );
+
+        centerPattern = ctx.createPattern(
+            tileCanvas,
+            "repeat"
+        );
+
+        draw();
+    };
 })();
