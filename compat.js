@@ -34,7 +34,7 @@
     style.id = 'winbox-7css-compat-style';
     style.textContent = [
         '.winbox.window { max-width: none !important; max-height: none !important; }',
-        '.winbox .wb-header.title-bar { height: 100% !important; line-height: normal !important; padding: 0; }',
+        '.winbox .wb-header.title-bar { line-height: normal !important; padding: 0; }',
         '.winbox .wb-header.title-bar .title-bar-text { display: flex; align-items: center; overflow: hidden; }',
         '.winbox .wb-body.window-body { position: absolute; left: 0; right: 0; bottom: 0; top: ' + HEADER_HEIGHT + 'px !important; margin: 0; overflow: auto; }',
         '.winbox .wb-icon { width: 16px; height: 16px; margin-right: 4px; flex: 0 0 auto; background-size: contain; display: none; }',
