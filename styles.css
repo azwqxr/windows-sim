@@ -1,8 +1,14 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-image: url("https://azwqxr.github.io/windows-sim/win.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    flex: 1;
-    padding: 0px;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
