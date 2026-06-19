@@ -4,11 +4,5 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     flex: 1;
-    padding: 20px;
-    color: white;
-    text-shadow: 0 0 5px rgba(0,0,0,0.7);
-}
-.h1 {
-      font-family: "Segoe UI", sans-serif;
-      font-size: 13px;
+    padding: 0px;
 }
