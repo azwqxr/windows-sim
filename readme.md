@@ -1,2 +1,2 @@
-azwqxr incorporated
-"we do stuff for money"
+`aperture science`\
+`we do what we must, because, we can.`\

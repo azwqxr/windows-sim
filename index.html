@@ -89,5 +89,23 @@
 </section>`,400,400,"Settings");
   </script>
 
+      <script>
+    function openWindow(content,wid,hei,title) {
+      new WinBox({
+        title: title,
+        width: wid,
+        height: hei,
+        x: "center",
+        y: "center",
+        class: ["no-full"],
+
+        html: content
+      });
+    }
+    window.onload = openWindow(`<div role="progressbar" class="paused">
+  <div style="width: 1%"></div>
+</div>`,800,100,"completion progress");
+  </script>
+  
 </body>
 </html>
