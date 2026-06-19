@@ -34,13 +34,14 @@
     style.id = 'winbox-7css-compat-style';
     style.textContent = [
         '.winbox.window { max-width: none !important; max-height: none !important; }',
-        '.winbox .wb-header.title-bar { line-height: normal !important; padding: 0; }',
-        '.winbox .wb-header.title-bar .title-bar-text { display: flex; align-items: center; overflow: hidden; }',
+        '.winbox .wb-header.title-bar { position: absolute; top: 0; left: 0; right: 0; height: ' + HEADER_HEIGHT + 'px !important; line-height: normal !important; padding: 0; box-sizing: border-box; }',
+        '.winbox .wb-header.title-bar .title-bar-text { display: flex; align-items: center; overflow: hidden; height: 100%; }',
+        '.winbox .wb-header.title-bar .title-bar-controls { height: 100%; align-items: center; }',
+        '.winbox .wb-header.title-bar .title-bar-controls button { width: 21px; height: 21px; flex: 0 0 auto; }',
         '.winbox .wb-body.window-body { position: absolute; left: 0; right: 0; bottom: 0; top: ' + HEADER_HEIGHT + 'px !important; margin: 0; overflow: auto; }',
         '.winbox .wb-icon { width: 16px; height: 16px; margin-right: 4px; flex: 0 0 auto; background-size: contain; display: none; }',
         '.winbox .wb-icon[style*="background-image"] { display: inline-block; }',
         '.winbox .wb-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }',
-        '.winbox .wb-control.title-bar-controls { display: flex; }',
         '.winbox.min { display: none; }', // WinBox uses its own minimize-bar logic; hide window while minimized
         '.winbox.no-full .wb-full { display: none; }'
     ].join('\n');
