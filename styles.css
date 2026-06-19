@@ -13,7 +13,14 @@ body {
 }
 
 .tabs {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs article[role="tabpanel"] {
+    flex: 1;
+    overflow: auto;
 }
