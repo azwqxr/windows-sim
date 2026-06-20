@@ -39,7 +39,9 @@
         html: content
       });
     }
-    window.onload = openWindow(`<section class="tabs">
+    window.onload = init();
+    function init() {
+        openWindow(`<section class="tabs">
   <menu role="tablist" aria-label="Sample Tabs">
     <button role="tab" aria-controls="tab-A" aria-selected="true">Instruction</button>
     <button role="tab" aria-controls="tab-B">Example</button>
@@ -92,7 +94,7 @@
     <p>This tab is disabled, so you should not be able to read this.</p>
   </article>
 </section>`,400,400,"Settings");
-    window.onload = openWindow(`<div class="has-scrollbar" style="width: 300px; height: 150px; overflow: auto">
+   openWindow(`<div class="has-scrollbar" style="width: 300px; height: 150px; overflow: auto">
   total completion progress of the project:<div role="progressbar" class="paused">
   <div style="width: 1%"></div>
 </div>
@@ -116,6 +118,7 @@ check out mint's website:
   <div style="width: 1%"></div>
 <button>jimhasaburger.com</button>
 </div>`,400,400,"azwqxr inc info wizard");
+    }
   </script>
   
 </body>
