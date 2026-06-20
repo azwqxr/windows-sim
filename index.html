@@ -92,21 +92,6 @@
     <p>This tab is disabled, so you should not be able to read this.</p>
   </article>
 </section>`,400,400,"Settings");
-  </script>
-
-      <script>
-    function openWindow(content,wid,hei,title) {
-      new WinBox({
-        title: title,
-        width: wid,
-        height: hei,
-        x: "center",
-        y: "center",
-        class: ["no-full"],
-
-        html: content
-      });
-    }
     window.onload = openWindow(`<div class="has-scrollbar" style="width: 300px; height: 150px; overflow: auto">
   total completion progress of the project:<div role="progressbar" class="paused">
   <div style="width: 1%"></div>
