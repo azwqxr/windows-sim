@@ -21,7 +21,7 @@
   <script src="compat.js"></script>
 
   <link rel="stylesheet" href="css/styles.css">
-  <script src="script.js"></script>
+  <script src="main.js"></script>
 
 
   <!-- LUA! -->
@@ -48,21 +48,21 @@
     function init() {
         openWindow(`<section class="tabs">
   <menu role="tablist" aria-label="Sample Tabs">
-    <button role="tab" aria-controls="tab-A" aria-selected="true">Instruction</button>
+    <button role="tab" aria-controls="tab-A" aria-selected="true">Theme</button>
     <button role="tab" aria-controls="tab-B">Example</button>
     <button role="tab" aria-controls="tab-C">More instruction</button>
     <button role="tab" aria-controls="tab-D" disabled="">Disabled Tab</button>
   </menu>
   <!-- the tab content -->
   <article role="tabpanel" id="tab-A">
-    <h3>Creating tabs</h3>
+    <h3>Themes</h3>
     <p>
-      To create a tab, use a <code>menu</code> element with <code>role="tablist"</code>.
-      Then for the tab titles, use a <code>button</code> with <code>role="tab"</code>, and set the <code>aria-controls</code> attribute to
-      the corresponding id of the element with <code>role="tabpanel"</code>.
+      more settings coming later
+      only aero rn
     </p>
     <p>
-      Read more at <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role" target="_blank">MDN Web docs - ARIA: tab role</a>
+      <input type="checkbox" id="aerocheck">
+      <label for="example1">aero</label>
     </p>
   </article>
   <article role="tabpanel" id="tab-B" hidden="">
