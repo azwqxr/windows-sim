@@ -1,42 +1,4 @@
-hi
-
-hi
+i already put favicon
 
 
-te
 
-team create but better?
-
-yes but its a lil buggy
-hur text is corrupted a bvit
-
-
-l
-ik
- ren
-lets remove dragselect.js for a bith
-k
-l
-the lua works, check console!
-yuipee
-
-anyway search up how fengari works then u can use ur lua knowledge (if u have any)
-to make js but in lua.
-
-k
-added link to site in the repo
-can u make the js fgiles
-for the settings tabs thingy
-
-uhh sir why isnt 7in.jpg in img folderr
-
-there is no img folder???s
-its jsut win.png
-check discortd
- 
-thats dist its for winbox onlyu
-not ours
-asdf
-OTABS WORK
-
-i made them into lua
